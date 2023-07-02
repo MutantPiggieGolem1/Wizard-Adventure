@@ -14,14 +14,15 @@ for (let r = 0; r < 100; r++) {
 		grid[r][c] = Math.random() > 0.6 ? elements[Math.floor(Math.random() * elements.length)] : blank;
 	}
 }
-grid[0][0] = goal;
-//[Math.floor(Math.random() * grid.length)][Math.floor(Math.random() * grid[0].length)] = goal
+grid[Math.floor(Math.random() * grid.length)][Math.floor(Math.random() * grid[0].length)] = goal;
 
 //gameplay variables
 let px = Math.floor(Math.random() * grid.length)
 let py = Math.floor(Math.random() * grid[0].length)
 let dist = 0
 const interactCounts = Object.fromEntries([...Object.keys(interactables).map(k => [k, 0]), [blank, 0], [goal, 0]])
+
+grid[py][px] = blank;
 
 function normalize(i, len) {return (i >= 0 ? i : Math.ceil(-i / len) * len + i) % len}
 

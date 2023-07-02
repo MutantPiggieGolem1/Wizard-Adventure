@@ -31,8 +31,8 @@ document.onkeyup = (e) => e.key in moveMap ? move(...moveMap[e.key]) : null
 function move(dx, dy) {
 	const coords = [normalize(py + dy, grid.length), normalize(px + dx, grid[0].length)]
 	let toMove = grid[coords[0]][coords[1]]
-	if (interactables[toMove] === false) return;
 	interactCounts[toMove]++;
+	if (interactables[toMove] === false) return;
 	dist++;
 	grid[coords[0]][coords[1]] = interactables[toMove] ?? toMove;
 	[py, px] = coords

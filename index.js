@@ -1,5 +1,4 @@
 // initial state constants
-const moveMap = { "w": [0, -1], "s": [0, 1], "a": [-1, 0], "d": [1, 0] }
 const interactables = { "🌹": "🥀", "🥀": "🍁", "🍄": "🍂", "🌳": false, "🌲": false }
 const player = "🧙"
 const goal = "🔮"
@@ -27,7 +26,19 @@ grid[py][px] = blank;
 function normalize(i, len) {return (i >= 0 ? i : Math.ceil(-i / len) * len + i) % len}
 
 // handle input
-document.onkeyup = (e) => e.key in moveMap ? move(...moveMap[e.key]) : null
+const keyMoveMap = { "w": [0, -1], "s": [0, 1], "a": [-1, 0], "d": [1, 0] }
+document.onkeyup = (e) => e.key in keyMoveMap ? move(...keyMoveMap[e.key]) : null
+const tapMoveMap = { true: {true: [1, 0], false: [-1, 0]} }
+document.ontouchstart = (e) => {
+	e.preventDefault()
+	if (e.touches.length > 1) return;
+	const touch = e.touches[0]
+	let x = touch.screenX - screen.width;
+	let y = screen.height - touch.screenY;
+	const isHoriz = Math.abs(x) > Math.abs(y)
+	const dir = (isHoriz ? x > 0 : y > 0) ? 1 : -1
+	move(isHoriz ? dir : 0, !isHoriz ? -dir : 0)
+}
 function move(dx, dy) {
 	const coords = [normalize(py + dy, grid.length), normalize(px + dx, grid[0].length)]
 	let toMove = grid[coords[0]][coords[1]]

@@ -28,7 +28,6 @@ function normalize(i, len) {return (i >= 0 ? i : Math.ceil(-i / len) * len + i) 
 // handle input
 const keyMoveMap = { "w": [0, -1], "s": [0, 1], "a": [-1, 0], "d": [1, 0] }
 document.onkeyup = (e) => e.key in keyMoveMap ? move(...keyMoveMap[e.key]) : null
-const tapMoveMap = { true: {true: [1, 0], false: [-1, 0]} }
 document.ontouchstart = (e) => {
 	e.preventDefault()
 	if (e.touches.length > 1) return;
